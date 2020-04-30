@@ -1,6 +1,6 @@
 ---
 title: "GF-0604 Procesamiento de datos geográficos<br>Laboratorio 02: R - Graficación básica"
-author: "Manuel Vargas"
+author: "Axell Soto Martinez"
 date: "2020-04-20"
 output:
   html_document:
@@ -54,21 +54,34 @@ ca_covid19 <- read.csv(file='https://raw.githubusercontent.com/geoprocesamiento-
 print(ca_covid19)
 ```
 
+
 2. (10%) Genere un resumen de los datos con la función  ```summary() ```.
 
 ```{r}
+summary(ca_covid19)
 
 ```
 
 3. (10%) Con la función ```barplot()```, genere un gráfico de barras de los casos confirmados.
 
 ```{r}
+paises = c("PAN", "CRI", "NIC", "SLV", "HND", "GTM", "BLZ", "DOM")
+poblaciones = c(4.1, 5.0, 6.2, 6.4, 9.2, 16.9, 0.3, 10.6)
+ca_poblacion_paises = data.frame(pais = paises,poblacion = poblaciones)
+
+barplot(height=ca_covid19$confirmados)
+
 
 ```
 
 4. (10%) Con la función  ```order()```, ordene el data frame por cantidad de casos confirmados y genere de nuevo el gráfico.
 
 ```{r}
+confirmados.ordenado <- order(ca_covid19$confirmados, decreasing=TRUE)
+
+ca_covid19.confirmados <- ca_covid19[confirmados.ordenado,]
+
+barplot(height=ca_covid19.confirmados$confirmados)
 
 ```
 
@@ -78,6 +91,7 @@ print(ca_covid19)
 - Titulo del gráfico.
 
 ```{r}
+barplot(height=ca_covid19.confirmados$confirmados,names.arg=ca_covid19.confirmados$pais,xlab="País",ylab="Millones de habitantes",main="Personas confirmadas de los países centroamericanos y República Dominicana")
 
 ```
 
@@ -87,8 +101,19 @@ print(ca_covid19)
 
 ```{r}
 
+activos.ordenado <- order(ca_covid19$activos, decreasing=TRUE)
+
+ca_covid19.activos <- ca_covid19[activos.ordenado,]
+
+barplot(height=ca_covid19.activos$activos,names.arg=ca_covid19.activos$pais,xlab="País",ylab="Millones de habitantes",main="Personas activas de los países centroamericanos y República Dominicana")
+
 ```
 
 ```{r}
+fallecidos.ordenado <- order(ca_covid19$fallecidos, decreasing=TRUE)
+
+ca_covid19.fallecidos <- ca_covid19[fallecidos.ordenado,]
+
+barplot(height=ca_covid19.fallecidos$fallecidos,names.arg=ca_covid19.fallecidos$pais,xlab="País",ylab="Millones de habitantes",main="Personas fallecidas de los países centroamericanos y República Dominicana")
 
 ```
